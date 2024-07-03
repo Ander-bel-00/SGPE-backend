@@ -1,0 +1,2 @@
+# Ignorar la carpeta node modules al subir cambios al repositorio de GitHub.
+node_modules
