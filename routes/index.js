@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const AuthController = require('../controllers/AuthController');
 const AdminController = require('../controllers/AdminsController');
 const RegionalController = require('../controllers/RegionalController');
 const CentroFormacionController = require('../controllers/CentroFormacionController');
@@ -11,10 +12,13 @@ module.exports = function () {
 
     // *** Rutas para Regionales. ***
 
+    // *** Rutas para la autenticación. ***
+    router.post('/api/auth/login', AuthController.iniciarSesion);
+
     // Ruta para la creación de regionales.
     router.post('/api/register/regional', RegionalController.NewRegional);
     // Ruta para obtener todas las regionales.
-    router.get('/api/regionales', RegionalController.Regionales);
+    router.get('/api/regionales', AuthController.authenticateToken, RegionalController.Regionales);
     // Ruta para obtener una regional por su ID.
     router.get('/api/regional/:id', RegionalController.RegionalByID);
     // Ruta para actualizar los datos de una regional.
