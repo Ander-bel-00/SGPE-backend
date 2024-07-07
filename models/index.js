@@ -3,85 +3,82 @@ const Regional = require('./Regional');
 const CentroFormacion = require('./CentroFormacion');
 const FuenteFinanciacion = require('./FuenteFinanciacion');
 const GiraTecnica = require('./GiraTecnica');
-const Participantes = require('./Participantes');
+const Personas = require('./Personas');
+const TipoDocumento = require('./TipoDocumento');
+const Usuarios = require('./Users');
+const Admin = require('./Admin');
 
-// Aquí se definen las relaciones de las tablas.
-
-// *** Relaciones para la tabla Regional. ***
-
-// Una regional puede tener muchos centros de formación.
+// Definir las relaciones
 Regional.hasMany(CentroFormacion, {
-    foreignKey: 'regional_id',
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
+  foreignKey: 'regional_id',
+  onUpdate: 'CASCADE',
+  onDelete: 'CASCADE',
 });
-
-// Una regional puede tener muchas giras técnicas.
-Regional.hasMany(GiraTecnica, {
-    foreignKey: 'regional_id',
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
-});
-
-// *** Relaciones para la tabla centro_formacion. ***
-
-// Un centro de formación pertenece a una regional.
 CentroFormacion.belongsTo(Regional, {
-    foreignKey: 'regional_id',
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
+  foreignKey: 'regional_id',
 });
 
-// Un centro de formación puede tener muchas giras técnicas.
 CentroFormacion.hasMany(GiraTecnica, {
-    foreignKey: 'centro_formacion_id',
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
+  foreignKey: 'centro_formacion_id',
+  onUpdate: 'CASCADE',
+  onDelete: 'RESTRICT',
 });
-
-
-// *** Relaciones para la tabla gira_tecnica. ***
-
-// Una gira técnica pertenece a una regional.
-GiraTecnica.belongsTo(Regional, {
-    foreignKey: 'regional_id',
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
-});
-
-// Una gira técnica pertenece a un centro de formación.
 GiraTecnica.belongsTo(CentroFormacion, {
-    foreignKey: 'centro_formacion_id',
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
+  foreignKey: 'centro_formacion_id',
 });
 
-// Una gira técnica tiene una fuente de financiación.
-GiraTecnica.belongsTo(FuenteFinanciacion, {
-    foreignKey: 'fuente_financiacion_id',
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
-});
-
-// Una gira técnica puede tener muchos participantes.
-GiraTecnica.hasMany(Participantes, {
-    foreignKey: 'gira_tecnica_id',
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
-});
-
-// *** Relaciones para la tabla fuente_financiacion. ***
-
-// Una fuente de financiación puede ser para muchas giras técnicas.
 FuenteFinanciacion.hasMany(GiraTecnica, {
-    foreignKey: 'fuente_financiacion_id',
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
+  foreignKey: 'fuente_financiacion_id',
+  onUpdate: 'CASCADE',
+  onDelete: 'CASCADE',
+});
+GiraTecnica.belongsTo(FuenteFinanciacion, {
+  foreignKey: 'fuente_financiacion_id',
 });
 
+GiraTecnica.hasMany(Personas, {
+  foreignKey: 'gira_tecnica_id',
+  onUpdate: 'CASCADE',
+  onDelete: 'RESTRICT',
+});
+Personas.belongsTo(GiraTecnica, {
+  foreignKey: 'gira_tecnica_id',
+});
 
+Usuarios.hasOne(Personas, {
+  foreignKey: 'user_id',
+  onUpdate: 'CASCADE',
+  onDelete: 'RESTRICT',
+});
+Personas.belongsTo(Usuarios, {
+  foreignKey: 'user_id',
+});
+
+TipoDocumento.belongsTo(Personas, {
+  foreignKey: 'persona_id',
+});
+Personas.hasOne(TipoDocumento, {
+  foreignKey: 'persona_id',
+});
+
+Usuarios.hasOne(Admin, {
+  foreignKey: 'user_id',
+  onUpdate: 'CASCADE',
+  onDelete: 'RESTRICT',
+});
+Admin.belongsTo(Usuarios, {
+  foreignKey: 'user_id',
+});
+
+// Exportar los modelos y sequelize
 module.exports = {
-    sequelize,
-    Regional,
-    CentroFormacion
+  sequelize,
+  Regional,
+  CentroFormacion,
+  FuenteFinanciacion,
+  GiraTecnica,
+  Personas,
+  TipoDocumento,
+  Usuarios,
+  Admin,
 };

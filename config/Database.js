@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 const Database = process.env.DATABASE || 'sgpe';
-const UserDB = process.env.USER|| 'root';
-const PasswordDB = process.env.PASSWORD || "root";
+const UserDB = process.env.USER || 'root';
+const PasswordDB = process.env.PASSWORD || 'root';
 const PortDB = process.env.PORTDB || 3306;
 const HostDB = process.env.HOST || 'localhost';
 
@@ -17,10 +17,16 @@ const sequelize = new Sequelize(Database, UserDB, PasswordDB, {
     }
 });
 
-async function TestConnection () {
+async function TestConnection() {
     try {
         await sequelize.authenticate();
         console.log('Connection established successfully');
+
+        // Ejecutar la consulta SQL para seleccionar la base de datos
+        await sequelize.query(`USE ${Database}`);
+
+        console.log(`Database '${Database}' selected`);
+
     } catch (error) {
         console.error('Unable to connect to database', error);
     }

@@ -9,11 +9,12 @@ const exphbs = require('express-handlebars').create({
 // Importa el módulo CORS (Cross-Origin Resource Sharing), que permite gestionar solicitudes de recursos 
 // de diferentes orígenes en la aplicación.
 const cors = require('cors');
-
+const routes = require('./routes');
 const { sequelize, TestConnection } = require('./config/Database');
 const bodyparser = require('body-parser');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
+const morgan = require('morgan');
 
 const models = require('./models');
 
@@ -27,6 +28,8 @@ TestConnection();
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true}));
 app.use(cookieParser());
+// Utilizar morgan para conocer las solicitudes que llegan al servidor.
+app.use(morgan('dev'));
 
 
 // Habilitar el uso de CORS.
@@ -47,7 +50,10 @@ app.set('view engine', 'hbs');
 // 'views' es el directorio donde se almacenan las plantillas de vista y se usa 'path.join' para crear una ruta absoluta a esa carpeta, basada en el directorio actual del archivo.
 app.set('views', path.join(__dirname, 'views'));
 
+// Utilizar las rutas establecidas en routes.
+app.use('/', routes());
 
+// Establecer el puerto que usará el servidor.
 const port = process.env.PORT || 5000;
 
 async function startServer() {

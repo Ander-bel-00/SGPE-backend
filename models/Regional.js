@@ -1,21 +1,19 @@
 const {DataTypes} = require('sequelize');
 const { sequelize } = require('../config/Database');
 
-const Regional = sequelize.define("Regional", {
+const Regional = sequelize.define("Regionales", {
     id: {
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         primaryKey: true
     },
     nombre: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(50),
         allowNull: false
     }
 }, {
     sequelize,
-    modelName: 'Regional',
-    freezeTableName: true,  // Evita la pluralización del nombre de la tabla
+    modelName: 'Regionales',
     indexes: [
         {
             unique: true,

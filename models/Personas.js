@@ -1,29 +1,29 @@
 const {DataTypes} = require('sequelize');
 const { sequelize } = require('../config/Database');
 
-const Participantes = sequelize.define('Participantes', {
+const Personas = sequelize.define('Personas', {
     id: {
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
         allowNull: false,
-        primaryKey: true
+        primaryKey: true,
+    },
+    user_id: {
+        type: DataTypes.UUID,
+        allowNull: false,
     },
     gira_tecnica_id: {
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
         allowNull: false,
+        unique: true
     },
-    nombre: {
-        type: DataTypes.STRING,
-        allowNull: false
+    numero_documento: {
+        type: DataTypes.INTEGER(10),
+        allowNull: false,
+        unique: true
     },
-    rol: {
-        type: DataTypes.STRING,
-        allowNull: false
-    }
 }, {
     sequelize,
-    modelName: 'Participantes',
+    modelName: 'Personas',
     indexes: [
         {
             unique: true,
@@ -32,4 +32,4 @@ const Participantes = sequelize.define('Participantes', {
     ],
 });
 
-module.exports = Participantes;
+module.exports = Personas;
