@@ -33,9 +33,11 @@ exports.NewUser = async (req, res, next) => {
     // Verificar si la gira técnica existe.
     const giraTecnica = await GiraTecnica.findByPk(gira_tecnica_id);
 
-    if(!giraTecnica) return res.status(404).json({
-      message: 'No se encontró la gira técnica con el id proporcionado'
-    });
+    if (req.body.gira_tecnica_id) {
+      if(!giraTecnica) return res.status(404).json({
+        message: 'No se encontró la gira técnica con el id proporcionado'
+      });
+    }
 
     // Verificar si el usuario ya existe con el mismo número de documento o correo electrónico.
     const userExists = await Usuarios.findOne({

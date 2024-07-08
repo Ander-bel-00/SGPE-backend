@@ -34,7 +34,7 @@ app.use(morgan('dev'));
 
 // Habilitar el uso de CORS.
 app.use(cors({
-    origin: 'url-front',
+    origin: 'http://localhost:3000',
     credentials: true
 }));
 

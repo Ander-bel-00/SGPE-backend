@@ -13,7 +13,7 @@ const Personas = sequelize.define('Personas', {
     },
     gira_tecnica_id: {
         type: DataTypes.UUID,
-        allowNull: false,
+        allowNull: true,
         unique: true
     },
     numero_documento: {

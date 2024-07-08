@@ -6,7 +6,7 @@ const GiraTecnica = require('./GiraTecnica');
 const Personas = require('./Personas');
 const TipoDocumento = require('./TipoDocumento');
 const Usuarios = require('./Users');
-const Admin = require('./Admin');
+
 
 // Definir las relaciones
 Regional.hasMany(CentroFormacion, {
@@ -61,15 +61,6 @@ Personas.hasOne(TipoDocumento, {
   foreignKey: 'persona_id',
 });
 
-Usuarios.hasOne(Admin, {
-  foreignKey: 'user_id',
-  onUpdate: 'CASCADE',
-  onDelete: 'RESTRICT',
-});
-Admin.belongsTo(Usuarios, {
-  foreignKey: 'user_id',
-});
-
 // Exportar los modelos y sequelize
 module.exports = {
   sequelize,
@@ -80,5 +71,4 @@ module.exports = {
   Personas,
   TipoDocumento,
   Usuarios,
-  Admin,
 };
