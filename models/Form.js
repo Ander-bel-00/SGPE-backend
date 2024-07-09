@@ -17,7 +17,23 @@ const Form = sequelize.define('Form', {
   endDate: {
     type: DataTypes.DATE,
     allowNull: true,
-  }
+  },
+  headerColor: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  questionBorderColor: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  backgroundColor: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  publicLink: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 });
 
 module.exports = Form;

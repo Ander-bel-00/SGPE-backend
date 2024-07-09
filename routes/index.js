@@ -127,8 +127,10 @@ module.exports = function () {
   router.delete("/api/delete/user/:id", UsersController.DeleteUser);
 
   // *** Rutas para el constructor de formularios. ***
-  router.post('/api/new-form', FormsController.newForm);
+  router.post('/api/forms/new', FormsController.newForm);
   router.get('/api/forms', FormsController.getForms);
+  router.get('/api/form/:id', FormsController.getFormWithQuestions);
+  router.post('/api/form/submit' , FormsController.submitResponse);
 
   return router;
 };
